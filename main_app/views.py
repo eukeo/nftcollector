@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import NFT
 
 def home(request):
@@ -19,3 +19,13 @@ def nfts_detail(request, nft_id):
 class NFTCreate(CreateView):
   model = NFT
   fields = '__all__'
+  success_url = '/nfts/'
+
+class NFTUpdate(UpdateView):
+  model = NFT
+  # Let's disallow the renaming of a cat by excluding the name field!
+  fields = ['breed', 'traits', 'number']
+
+class NFTDelete(DeleteView):
+  model = NFT
+  success_url = '/nfts/'
